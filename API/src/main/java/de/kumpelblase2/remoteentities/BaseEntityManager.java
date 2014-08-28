@@ -13,16 +13,15 @@ import org.bukkit.plugin.Plugin;
 
 public abstract class BaseEntityManager implements EntityManager
 {
-	private final Plugin m_plugin;
+	private Plugin m_plugin;
 	private final Map<Integer, RemoteEntity> m_entities;
 	private boolean m_saveOnDisable = false;
 	protected boolean m_removeDespawned = false;
 	protected IEntitySerializer m_serializer;
 	protected final RemoteEntityConversionService m_conversionService;
 
-	protected BaseEntityManager(Plugin inPlugin)
+	protected BaseEntityManager()
 	{
-		this.m_plugin = inPlugin;
 		this.m_entities = new HashMap<Integer, RemoteEntity>();
 		this.m_conversionService = Bukkit.getServicesManager().getRegistration(RemoteEntityConversionService.class).getProvider();
 	}
@@ -32,7 +31,9 @@ public abstract class BaseEntityManager implements EntityManager
 		return this.m_plugin;
 	}
 
-	protected abstract void setup();
+	protected abstract void setup(Plugin inPlugin);
+
+	protected abstract void teardown();
 
 	@Override
 	public boolean isRemoteEntity(LivingEntity inEntity)
@@ -289,5 +290,11 @@ public abstract class BaseEntityManager implements EntityManager
 		}
 
 		return this.m_conversionService.getRemoteEntityFromLiving(inEntity);
+	}
+
+	@Override
+	public RemoteEntity createRemoteEntityFromExisting(LivingEntity inEntity)
+	{
+		return this.createRemoteEntityFromExisting(inEntity, true);
 	}
 }

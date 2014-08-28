@@ -22,4 +22,6 @@ public interface RemoteEntitiesAPI
 	public RemoteEntity getRemoteEntityFromEntity(LivingEntity inEntity);
 
 	public JavaPlugin getPlugin();
+
+	public void shutdown();
 }

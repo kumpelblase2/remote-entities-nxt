@@ -5,7 +5,6 @@ import de.kumpelblase2.remoteentities.persistence.*;
 import de.kumpelblase2.remoteentities.services.CustomInventoryService;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 
 @IgnoreSerialization
 public class RemoteInventoryFeature extends RemoteFeature implements InventoryFeature
@@ -42,8 +41,7 @@ public class RemoteInventoryFeature extends RemoteFeature implements InventoryFe
 	public void onAdd(RemoteEntity inEntity)
 	{
 		super.onAdd(inEntity);
-		// WAS new CraftInventoryCustom
-		this.m_inventory = this.m_inventoryService.createInventory((InventoryHolder)this.m_entity.getHandle(), this.m_size);
+		this.m_inventory = this.m_inventoryService.createInventory(this.m_entity, this.m_size);
 	}
 
 	@Override

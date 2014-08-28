@@ -8,6 +8,7 @@
 		<module>Helper</module>
 		<module>API</module>
 		<module>Implementation</module>
+		<module>Plugin</module>
 	</modules>
 	<name>RemoteEntities</name>
 	<description>Be able to control every entity in the game. Also you can create npcs if you want to!</description>
@@ -27,6 +28,12 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>bukkit</artifactId>
+			<version>1.7.2-R0.2</version>
 		</dependency>
 
 		<dependency>
@@ -89,9 +96,6 @@
 				<executions>
 					<execution>
 						<phase>package</phase>
-						<de.kumpelblase2.remoteentities.api.goals>
-							<goal>shade</goal>
-						</de.kumpelblase2.remoteentities.api.goals>
 					</execution>
 				</executions>
 				<configuration>
@@ -126,9 +130,6 @@
 					<execution>
 						<id>generate-rebel-xml</id>
 						<phase>process-resources</phase>
-						<de.kumpelblase2.remoteentities.api.goals>
-							<goal>generate</goal>
-						</de.kumpelblase2.remoteentities.api.goals>
 					</execution>
 				</executions>
 			</plugin>
@@ -146,7 +147,6 @@
 				<directory>${basedir}/src/main/resources/</directory>
 				<includes>
 					<include>plugin.yml</include>
-					<include>re_classes.txt</include>
 				</includes>
 			</resource>
 		</resources>

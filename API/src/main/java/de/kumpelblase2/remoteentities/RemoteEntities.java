@@ -15,6 +15,11 @@ public class RemoteEntities
 	{
 	}
 
+	public static void setImplementation(RemoteEntitiesAPI inImplementation)
+	{
+		s_api = inImplementation;
+	}
+
 	public static EntityManager createManager(Plugin inPlugin)
 	{
 		if(s_api == null)

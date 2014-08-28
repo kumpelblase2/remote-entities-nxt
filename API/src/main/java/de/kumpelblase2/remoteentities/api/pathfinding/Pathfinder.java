@@ -5,7 +5,7 @@ import de.kumpelblase2.remoteentities.api.RemoteEntity;
 import de.kumpelblase2.remoteentities.api.events.RemoteAsyncPathFindEvent;
 import de.kumpelblase2.remoteentities.api.events.RemotePathCancelEvent;
 import de.kumpelblase2.remoteentities.api.pathfinding.checkers.*;
-import de.kumpelblase2.remoteentities.services.PathingService;
+import de.kumpelblase2.remoteentities.services.WorldService;
 import de.kumpelblase2.remoteentities.utilities.NMSUtil;
 import de.kumpelblase2.remoteentities.utilities.WorldUtilities;
 import net.minecraft.server.v1_7_R1.EntityLiving;
@@ -25,7 +25,7 @@ public class Pathfinder
 	private int m_checked = 0;
 	private Path m_lastPath;
 	private boolean m_isFindingAsync = false;
-	private final PathingService m_pathingService;
+	private final WorldService m_worldService;
 	public static final Set<Material> transparentMaterial = new HashSet<Material>();
 	public static final Set<Material> liquidMaterial = new HashSet<Material>();
 
@@ -51,7 +51,7 @@ public class Pathfinder
 		this.m_closedList = new HashSet<BlockNode>();
 		this.m_checkers = new ArrayList<MoveChecker>();
 		this.m_entity = inEntity;
-		this.m_pathingService = Bukkit.getServicesManager().getRegistration(PathingService.class).getProvider();
+		this.m_worldService = Bukkit.getServicesManager().getRegistration(WorldService.class).getProvider();
 	}
 
 	public Pathfinder(RemoteEntity inEntity, boolean inAsyncFinding)
@@ -147,7 +147,7 @@ public class Pathfinder
 		Bukkit.getPluginManager().callEvent(event);
 		this.m_currentPath = event.getPath();
 		//NMSUtil.getNavigation(this.m_entity.getHandle()).a(this.m_currentPath.toNMSPath(), this.m_entity.getSpeed());
-		this.m_pathingService.injectPath(this.m_entity.getBukkitEntity(), this.m_currentPath, this.m_entity.getSpeed());
+		this.m_worldService.injectPath(this.m_entity.getBukkitEntity(), this.m_currentPath, this.m_entity.getSpeed());
 		return true;
 	}
 
@@ -164,7 +164,7 @@ public class Pathfinder
 		Bukkit.getPluginManager().callEvent(event);
 		this.m_currentPath = event.getPath();
 		//NMSUtil.getNavigation(this.m_entity.getHandle()).a(this.m_currentPath.toNMSPath(), inSpeed);
-		this.m_pathingService.injectPath(this.m_entity.getBukkitEntity(), this.m_currentPath, inSpeed);
+		this.m_worldService.injectPath(this.m_entity.getBukkitEntity(), this.m_currentPath, inSpeed);
 		return true;
 	}
 
@@ -187,7 +187,7 @@ public class Pathfinder
 
 					Pathfinder.this.m_currentPath = event.getPath();
 					//NMSUtil.getNavigation(Pathfinder.this.m_entity.getHandle()).a(Pathfinder.this.m_currentPath.toNMSPath(), Pathfinder.this.m_entity.getSpeed());
-					Pathfinder.this.m_pathingService.injectPath(Pathfinder.this.m_entity.getBukkitEntity(), event.getPath(), Pathfinder.this.m_entity.getSpeed());
+					Pathfinder.this.m_worldService.injectPath(Pathfinder.this.m_entity.getBukkitEntity(), event.getPath(), Pathfinder.this.m_entity.getSpeed());
 				}
 			}
 		});
@@ -214,7 +214,7 @@ public class Pathfinder
 					Pathfinder.this.m_currentPath = event.getPath();
 					Pathfinder.this.m_currentPath.setCustomSpeed(inSpeed);
 					//NMSUtil.getNavigation(Pathfinder.this.m_entity.getHandle()).a(Pathfinder.this.m_currentPath.toNMSPath(), inSpeed);
-					Pathfinder.this.m_pathingService.injectPath(Pathfinder.this.m_entity.getBukkitEntity(), event.getPath(), inSpeed);
+					Pathfinder.this.m_worldService.injectPath(Pathfinder.this.m_entity.getBukkitEntity(), event.getPath(), inSpeed);
 				}
 			}
 		});

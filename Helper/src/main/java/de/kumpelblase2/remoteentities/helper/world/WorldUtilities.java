@@ -2,15 +2,10 @@ package de.kumpelblase2.remoteentities.helper.world;
 
 import java.util.ArrayList;
 import java.util.List;
-import de.kumpelblase2.remoteentities.api.RemoteEntity;
-import de.kumpelblase2.remoteentities.api.pathfinding.BlockNode;
 import net.minecraft.server.v1_7_R1.*;
-import org.bukkit.Chunk;
-import org.bukkit.craftbukkit.v1_7_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
 public class WorldUtilities
 {
@@ -40,14 +35,6 @@ public class WorldUtilities
 	public static Village getClosestVillage(Entity inEntity)
 	{
 		return inEntity.world.villages.getClosestVillage(MathHelper.floor(inEntity.locX), MathHelper.floor(inEntity.locY), MathHelper.floor(inEntity.locZ), 32);
-	}
-
-	public static Vector addEntityWidth(RemoteEntity inEntity, BlockNode inNode)
-	{
-		Vector vec = new Vector(inNode.getX(), inNode.getY(), inNode.getZ());
-		double width = ((int)(inEntity.getHandle().width + 1)) * 0.5d;
-		vec.add(new Vector(width, 0, width));
-		return vec;
 	}
 
 	/**
@@ -90,12 +77,5 @@ public class WorldUtilities
 	public static void sendPacketToPlayer(Player inPlayer, Packet inPacket)
 	{
 		((CraftPlayer)inPlayer).getHandle().playerConnection.sendPacket(inPacket);
-	}
-
-	public static void updateEntityTracking(RemoteEntity inEntity, Chunk inChunk)
-	{
-		WorldServer ws = ((CraftWorld)inChunk.getWorld()).getHandle();
-		if(!ws.tracker.trackedEntities.b(inEntity.getHandle().getId()))
-			ws.addEntity(inEntity.getHandle());
 	}
 }
