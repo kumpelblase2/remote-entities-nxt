@@ -24,13 +24,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.bukkit</groupId>
-			<artifactId>craftbukkit</artifactId>
-			<version>1.7.2-R0.2</version>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.1</version>
@@ -96,9 +89,9 @@
 				<executions>
 					<execution>
 						<phase>package</phase>
-						<goals>
+						<de.kumpelblase2.remoteentities.api.goals>
 							<goal>shade</goal>
-						</goals>
+						</de.kumpelblase2.remoteentities.api.goals>
 					</execution>
 				</executions>
 				<configuration>
@@ -133,9 +126,9 @@
 					<execution>
 						<id>generate-rebel-xml</id>
 						<phase>process-resources</phase>
-						<goals>
+						<de.kumpelblase2.remoteentities.api.goals>
 							<goal>generate</goal>
-						</goals>
+						</de.kumpelblase2.remoteentities.api.goals>
 					</execution>
 				</executions>
 			</plugin>
