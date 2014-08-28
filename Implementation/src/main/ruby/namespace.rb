@@ -5,6 +5,7 @@ module RemoteEntities
 	module Exceptions; end
 	module Events; end
 	module Services; end
+	module Features; end
 end
 
 module NMS; end
