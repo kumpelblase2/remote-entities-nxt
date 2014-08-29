@@ -1,5 +1,7 @@
 require 'java'
 require 'namespace'
+require 'base'
+require 'chunk_entity_loader'
 
 module RemoteEntities
 	class RubyEntityManager < Java::de.kumpelblase2.remoteentities.BaseEntityManager
@@ -7,30 +9,13 @@ module RemoteEntities
 		def setup(in_plugin)
 			@chunk_loader = RemoteEntities::ChunkEntityLoader.new self
 			bukkit.plugin_manager.register_events @chunk_loader, RemoteEntities.plugin
-			bukkit.scheduler.schedule_sync_repeating_task in_plugin, do
-				it = self.all_entities.iterator
-				while it.has_next
-					entity = it.next
-					if entity.bukkit_entity
-						handle = entity.nms_handle
-						handle.C
-						if handle.dead
-							if entity.despawn RemoteEntities::DespawnReason::DEATH
-								it.remove
-							end
-						end
-					else
-						if self.should_remove_despawned_entities
-							it.remove
-						end
-					end
-				end
-			end
+			bukkit.scheduler.schedule_sync_repeating_task in_plugin, DespawnDead.new(self), 100, 100
 		end
 
 		def teardown
 			@chunk_loader.unregister
 		end
+
 		java_signature 'de.kumpelblase2.remoteentities.api.RemoteEntity createEntity(de.kumpelblase2.remoteentities.api.RemoteEntityType, org.bukkit.Location, boolean)'
 		def create_entity(in_type, in_location, in_setup_goals)
 			if in_type.is_named
@@ -91,6 +76,34 @@ module RemoteEntities
 				self.create_entity type, old_location, true
 			else
 				self.create_named_entity type, old_location, name, true
+			end
+		end
+
+		class DespawnDead
+			include Java::java.lang.Runnable
+
+			def initialize(in_chunk_loader)
+				@chunk_loader = in_chunk_loader
+			end
+
+			def run
+				it = @chunk_loader.all_entities.iterator
+				while it.has_next
+					entity = it.next
+					if entity.bukkit_entity
+						handle = entity.nms_handle
+						handle.C
+						if handle.dead
+							if entity.despawn RemoteEntities::DespawnReason::DEATH
+								it.remove
+							end
+						end
+					else
+						if @chunk_loader.should_remove_despawned_entities
+							it.remove
+						end
+					end
+				end
 			end
 		end
 	end

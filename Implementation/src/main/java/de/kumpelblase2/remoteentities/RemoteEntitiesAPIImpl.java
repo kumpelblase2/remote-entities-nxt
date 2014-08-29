@@ -1,5 +1,8 @@
 package de.kumpelblase2.remoteentities;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import de.kumpelblase2.remoteentities.api.DespawnReason;
@@ -12,22 +15,31 @@ class RemoteEntitiesAPIImpl implements RemoteEntitiesAPI
 {
 	private final Map<String, EntityManager> m_managers = new HashMap<String, EntityManager>();
 	private final JavaPlugin m_plugin;
+	private final ScriptEngine m_jruby;
+	private EntityManagerFactory m_managerFactory;
 
 	public RemoteEntitiesAPIImpl(JavaPlugin inPlugin)
 	{
 		this.m_plugin = inPlugin;
+		this.m_jruby = JRubyScriptEngineManager.getEngine();
+		this.setupEngine();
 	}
 
 	@Override
 	public EntityManager createManager(Plugin inPlugin)
 	{
-		return createManager(inPlugin, false);
+		return this.createManager(inPlugin, false);
 	}
 
 	@Override
 	public EntityManager createManager(Plugin inPlugin, boolean inRemoveDespawned)
 	{
-		return null;
+		EntityManager manager = this.m_managerFactory.createManager();
+		manager.setRemovingDespawned(inRemoveDespawned);
+		if(manager instanceof BaseEntityManager)
+			((BaseEntityManager)manager).setup(inPlugin);
+
+		return manager;
 	}
 
 	@Override
@@ -85,6 +97,22 @@ class RemoteEntitiesAPIImpl implements RemoteEntitiesAPI
 			manager.despawnAll(DespawnReason.PLUGIN_DISABLE);
 			if(manager instanceof BaseEntityManager)
 				((BaseEntityManager)manager).teardown();
+		}
+	}
+
+	protected void setupEngine()
+	{
+		//TODO
+		this.m_jruby.put("MC_VERSION", null);
+		this.m_jruby.put("PLUGIN", this.m_plugin);
+		try
+		{
+			this.m_jruby.eval(new InputStreamReader(RemoteEntitiesAPIImpl.class.getResourceAsStream("ruby/main.rb")));
+			this.m_managerFactory = (EntityManagerFactory)this.m_jruby.eval("RemoteEntities::RemoteEntityManagerFactory.new");
+		}
+		catch(ScriptException e)
+		{
+			e.printStackTrace();
 		}
 	}
 }
