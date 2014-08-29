@@ -1,5 +1,6 @@
 require 'java'
 require 'namespace'
+require 'base'
 
 module RemoteEntities
 	class ChunkEntityLoader
@@ -25,8 +26,9 @@ module RemoteEntities
 			}
 		end
 
+		java_signature 'void onChunkUnload(org.bukkit.event.world.ChunkUnloadEvent)'
 		def on_chunk_unload(in_event)
-			chunk = event.chunk
+			chunk = in_event.chunk
 			chunk.entities.each { |entity|
 				if entity.is_a?(Java::org.bukkit.entity.LivingEntity)
 					remote = Java::de.kumpelblase2.remoteentities.RemoteEntities.remote_entity_from_entity entity
@@ -60,6 +62,10 @@ module RemoteEntities
 			[ Java::org.bukkit.event.world.ChunkLoadEvent.handler_list, Java::org.bukkit.event.world.ChunkUnloadEvent.handler_list ].each { |list|
 				list.unregister self
 			}
+		end
+
+		def can_spawn_at?(in_location)
+			in_location.chunk.is_loaded
 		end
 
 		class EntityLoadData
