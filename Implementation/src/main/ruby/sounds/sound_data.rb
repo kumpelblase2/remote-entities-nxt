@@ -1,13 +1,13 @@
 require 'java'
-require '../namespace'
+require '../base'
 
 SOUNDS = {
-	:Cow => {
-		RemoteEntities::EntitySounds::RANDOM => "mob.cow.say",
-	    RemoteEntities::EntitySounds::HURT => "mob.cow.hurt",
-	    RemoteEntities::EntitySounds::DEATH => "mob.cow.hurt",
-	    RemoteEntities::EntitySounds::STEP => "mob.cow.step"
-	}
+    :Cow => {
+        RemoteEntities::EntitySound::RANDOM => 'mob.cow.say',
+        RemoteEntities::EntitySound::HURT => 'mob.cow.hurt',
+        RemoteEntities::EntitySound::DEATH => 'mob.cow.hurt',
+        RemoteEntities::EntitySound::STEP => 'mob.cow.step',
+    }
 
 	#TODO
 }
