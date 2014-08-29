@@ -102,9 +102,9 @@ class RemoteEntitiesAPIImpl implements RemoteEntitiesAPI
 
 	protected void setupEngine()
 	{
-		//TODO
-		this.m_jruby.put("MC_VERSION", null);
-		this.m_jruby.put("PLUGIN", this.m_plugin);
+		this.m_jruby.put("MC_VERSION", null/*TODO*/);
+		this.m_jruby.put("SUPPORTED_VERSIONS", this.getPlugin().getConfig().get("versions.supported_versions"));
+		this.m_jruby.put("PLUGIN", this.getPlugin());
 		try
 		{
 			this.m_jruby.eval(new InputStreamReader(RemoteEntitiesAPIImpl.class.getResourceAsStream("ruby/main.rb")));

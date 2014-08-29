@@ -28,6 +28,7 @@ module RemoteEntities
 				return entity
 			end
 
+			entity.setup_sounds
 			self.add_remote_entity id, entity
 			if in_location
 				@chunk_loader.queue entity, in_location, in_setup_goals

@@ -2,6 +2,7 @@ require 'java'
 require 'namespace'
 require 'base'
 require 'service'
+require 'extensions'
 
 module RemoteEntities
 	class RemoteEntityManagerFactory

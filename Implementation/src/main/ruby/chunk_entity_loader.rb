@@ -52,7 +52,7 @@ module RemoteEntities
 		def spawn_entity(in_data)
 			in_data.entity.spawn(in_data.loc)
 			if in_data.entity.is_spawned and in_data.setup_goals
-				# todo setup default goals
+				in_data.entity.setup_default_goals
 			end
 		end
 
