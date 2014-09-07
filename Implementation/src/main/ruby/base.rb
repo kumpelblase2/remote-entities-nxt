@@ -30,6 +30,14 @@ module NMS
 	include_package 'net.minecraft.server.v1_7_R1'
 end
 
+module CB # TODO Can you automatically map this?
+	include_package 'org.bukkit.craftbukkit.v1_7_R1'
+
+	module Inventory
+		include_package 'org.bukkit.craftbukkit.v1_7_R1.inventory'
+	end
+end
+
 def bukkit
-	org.bukkit.Bukkit
+	Java::org.bukkit.Bukkit
 end

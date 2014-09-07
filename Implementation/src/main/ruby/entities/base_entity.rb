@@ -1,11 +1,17 @@
 require '../namespace'
+require '../base'
+require '../extensions'
+require '../mixins/inventory_holder'
+require '../mixins/inventory_copier'
 
 module RemoteEntities
 	module Entities
 		class BaseEntity < Java::de.kumpelblase2.remoteentities.api.BaseRemoteEntity
-			include Java::de.kumpelblase2.remoteentities.api.RemoteEntity
+			include RemoteEntities::EntityMixins::InventoryHolder
+			include RemoteEntities::EntityMixins::InventoryCopier
 
 			attr_reader :entity
+			attr_reader :m_speed
 			attr_accessor :unloaded_location
 
 			def initialize(in_id, in_type, in_manager)
@@ -16,18 +22,45 @@ module RemoteEntities
 				self.speed = -1
 			end
 
-			def move(in_location, in_speed)
+			java_signature 'boolean move(org.bukkit.Location, float)'
+			def move_by_location(in_location, in_speed)
 				unless in_speed
 					in_speed = self.speed
 				end
 
-				if self.stationary or not self.is_spawned # or NMSUtil.isOnLeash
-					#if(!NMSUtil.getNavigation(this.m_entity).a(inLocation.getX(), inLocation.getY(), inLocation.getZ(), inSpeed))
-					#{
-					#		PathEntity path = this.m_entity.world.a(this.getHandle(), MathHelper.floor(inLocation.getX()), (int) inLocation.getY(), MathHelper.floor(inLocation.getZ()), (float)this.getPathfindingRange(), true, false, false, true);
-					#	return this.moveWithPath(path, inSpeed);
-					#}
-					true
+				if self.is_stationary or not self.is_spawned or self.entity.on_leash?
+					if self.entity.navigation.a(in_location.x, in_location.y, in_location.z, in_speed)
+						true
+					else
+						path = self.entity.world.a(self.entity, NMS::MathHelper.floor(in_location.x), in_location.y, NMS::MathHelper.floor(in_location.z), self.pathfinding_range, true, false, false, true)
+						self.move_with_path path, in_speed
+					end
+				end
+			end
+
+			java_signature 'boolean move(org.bukkit.entity.LivingEntity, float)'
+			def move_by_entity(in_entity, in_speed)
+				unless in_speed
+					in_speed = self.speed
+				end
+
+				if self.is_stationary or not self.is_spawned or self.entity.on_leash? and not self.entity.eql?(in_entity.nms_handle)
+					unless self.entity.navigation.a(in_entity.nms_handle, in_speed)
+						path = self.entity.world.find_path(self.entity, in_entity.nms_handle, self.pathfinding_range, true, false, false, true)
+						self.move_with_path path, in_speed
+					end
+				end
+			end
+
+			def move_with_path(in_path, in_speed)
+				if self.entity and in_path and not self.is_stationary
+					if self.entity.is_a?(NMS::EntityCreature)
+						self.entity.path_entity = in_path
+					end
+
+					self.entity.navigation.a in_path, in_speed
+				else
+					false
 				end
 			end
 
@@ -72,18 +105,27 @@ module RemoteEntities
 				end
 			end
 
-			def look_at(in_location)
+			java_signature 'void lootAt(org.bukkit.Location)'
+			def look_at_location(in_location)
 				if self.is_spawned
-					# todo controller look
+					self.entity.controller_look.a in_location.x, in_location.y, in_location.z, 10, self.entity.max_head_rotation
+				end
+			end
+
+			java_signature 'void lookAt(org.bukkit.entity.Entity)'
+			def look_at_entity(in_entity)
+				if self.is_spawned
+					self.entity.controller_look.a(in_entity.nms_handle, 10, self.entity.max_head_rotation)
 				end
 			end
 
 			def stop_moving
 				if self.is_spawned
-					# todo stop nav
+					self.entity.navigation.h
 				end
 			end
 
+			java_signature 'void teleport(org.bukkit.Location)'
 			def teleport(in_location)
 				self.bukkit_entity.teleport in_location
 			end
@@ -144,7 +186,7 @@ module RemoteEntities
 				self.entity.get_attibute_instance(NMS::GenericAttributes.d).get_value
 			end
 
-			def get_native_entity_name
+			def native_entity_name
 				'CUSTOM'
 			end
 
@@ -167,6 +209,15 @@ module RemoteEntities
 					self.bukkit_entity.custom_name
 				else
 					# todo
+				end
+			end
+
+			java_signature 'double getSpeed()'
+			def speed
+				if self.is_spawned
+					self.entity.get_attribute_instance(NMS::GenericAttributes.d).value
+				else
+					self.m_speed != -1 ? self.m_speed : NMS::GenericAttributes.d.b
 				end
 			end
 		end

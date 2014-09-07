@@ -1,5 +1,5 @@
 require '../namespace'
-require '../sounds/sound_data'
+require '../definitions/sound_data'
 
 module RemoteEntities
 	module EntityMixins

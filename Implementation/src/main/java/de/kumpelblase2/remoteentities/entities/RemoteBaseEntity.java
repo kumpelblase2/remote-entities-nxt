@@ -24,6 +24,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.util.Vector;
 
 public abstract class RemoteBaseEntity<T extends LivingEntity> implements RemoteEntity
 {
@@ -123,50 +124,6 @@ public abstract class RemoteBaseEntity<T extends LivingEntity> implements Remote
 	}
 
 	@Override
-	public boolean move(Location inLocation)
-	{
-		return this.move(inLocation, this.getSpeed());
-	}
-
-	@Override
-	public boolean move(Location inLocation, double inSpeed)
-	{
-		if(!this.isSpawned() || this.m_isStationary || NMSUtil.isOnLeash(this.getHandle()))
-			return false;
-
-		if(!NMSUtil.getNavigation(this.m_entity).a(inLocation.getX(), inLocation.getY(), inLocation.getZ(), inSpeed))
-		{
-			PathEntity path = this.m_entity.world.a(this.getHandle(), MathHelper.floor(inLocation.getX()), (int) inLocation.getY(), MathHelper.floor(inLocation.getZ()), (float)this.getPathfindingRange(), true, false, false, true);
-			return this.moveWithPath(path, inSpeed);
-		}
-		return true;
-	}
-
-	@Override
-	public boolean move(LivingEntity inEntity)
-	{
-		return this.move(inEntity, this.getSpeed());
-	}
-
-	@Override
-	public boolean move(LivingEntity inEntity, double inSpeed)
-	{
-		if(!this.isSpawned() || this.m_isStationary || NMSUtil.isOnLeash(this.getHandle()))
-			return false;
-
-		EntityLiving handle = ((CraftLivingEntity)inEntity).getHandle();
-		if(handle == this.m_entity)
-			return true;
-
-		if(!NMSUtil.getNavigation(this.m_entity).a(handle, inSpeed))
-		{
-			PathEntity path = this.m_entity.world.findPath(this.getHandle(), handle, (float)this.getPathfindingRange(), true, false, false, true);
-			return this.moveWithPath(path, inSpeed);
-		}
-		return true;
-	}
-
-	@Override
 	public void setYaw(float inYaw)
 	{
 		this.setYaw(inYaw, false);
@@ -217,42 +174,6 @@ public abstract class RemoteBaseEntity<T extends LivingEntity> implements Remote
 		this.m_entity.aQ = inHeadYaw;
 		if(!(this.m_entity instanceof EntityHuman))
 			this.m_entity.aN = inHeadYaw;
-	}
-
-	@Override
-	public void lookAt(Location inLocation)
-	{
-		if(!this.isSpawned())
-			return;
-
-		NMSUtil.getControllerLook(this.m_entity).a(inLocation.getX(), inLocation.getY(), inLocation.getZ(), 10, NMSUtil.getMaxHeadRotation(this.m_entity));
-	}
-
-	@Override
-	public void lookAt(Entity inEntity)
-	{
-		if(!this.isSpawned())
-			return;
-
-		NMSUtil.getControllerLook(this.m_entity).a(((CraftEntity)inEntity).getHandle(), 10, NMSUtil.getMaxHeadRotation(this.m_entity));
-	}
-
-	@Override
-	public void stopMoving()
-	{
-		if(this.m_entity == null)
-			return;
-
-		NMSUtil.getNavigation(this.m_entity).h();
-	}
-
-	@Override
-	public void teleport(Location inLocation)
-	{
-		if(this.m_entity == null)
-			return;
-
-		this.getBukkitEntity().teleport(inLocation);
 	}
 
 	@Override
@@ -355,95 +276,12 @@ public abstract class RemoteBaseEntity<T extends LivingEntity> implements Remote
 	}
 
 	@Override
-	public boolean isSpawned()
-	{
-		return this.m_entity != null;
-	}
-
-	@Override
-	public boolean isPushable()
-	{
-		return this.m_isPushable;
-	}
-
-	@Override
-	public void setPushable(boolean inState)
-	{
-		this.m_isPushable = inState;
-	}
-
-	@Override
-	public double getSpeed()
-	{
-		if(this.m_entity == null)
-		{
-			if(this.m_speed != -1)
-				return this.m_speed;
-			else
-				return GenericAttributes.d.b();
-		}
-		else
-			return this.m_entity.getAttributeInstance(GenericAttributes.d).getValue();
-	}
-
-	@Override
 	public void setSpeed(double inSpeed)
 	{
 		if(this.m_entity == null)
 			this.m_speed = inSpeed;
 		else
 			this.m_entity.getAttributeInstance(GenericAttributes.d).setValue(inSpeed);
-	}
-
-	@Override
-	public void removeSpeedModifier()
-	{
-		if(this.m_entity != null)
-			this.m_entity.getAttributeInstance(GenericAttributes.d).b(new RemoteSpeedModifier(0, false));
-	}
-
-	@Override
-	public void addSpeedModifier(double inAmount, boolean inAdditive)
-	{
-		RemoteSpeedModifier modifier = new RemoteSpeedModifier(inAmount, inAdditive);
-		if(this.m_entity == null)
-			this.m_speedModifier = modifier;
-		else
-		{
-			AttributeInstance instance = this.m_entity.getAttributeInstance(GenericAttributes.d);
-			instance.b(modifier);
-			instance.a(modifier);
-		}
-	}
-
-	@Override
-	public void setPathfindingRange(double inRange)
-	{
-		this.m_entity.getAttributeInstance(GenericAttributes.b).setValue(inRange);
-	}
-
-	@Override
-	public double getPathfindingRange()
-	{
-		return this.m_entity.getAttributeInstance(GenericAttributes.b).getValue();
-	}
-
-	/**
-	 * Sets the path of the entity with a given speed.
-	 *
-	 * @param inPath	Path to follow
-	 * @param inSpeed	Speed to walk with
-	 * @return			true if it could use the path, false if not
-	 */
-	public boolean moveWithPath(PathEntity inPath, double inSpeed)
-	{
-		if(this.m_entity == null || inPath == null || this.m_isStationary)
-			return false;
-
-		if(this.m_entity instanceof EntityCreature)
-			((EntityCreature)this.m_entity).setPathEntity(inPath);
-
-		return NMSUtil.getNavigation(this.m_entity).a(inPath, inSpeed);
 	}
 
 	/**
@@ -515,87 +353,6 @@ public abstract class RemoteBaseEntity<T extends LivingEntity> implements Remote
 		return false;
 	}
 
-	@Override
-	public String getSound(EntitySound inType)
-	{
-		Object sound = this.m_sounds.get(inType);
-		if(sound instanceof String)
-			return (String)sound;
-		else
-		{
-			Random generator = new Random();
-			Object[] values = this.m_sounds.values().toArray();
-			return (String)values[generator.nextInt(values.length)];
-		}
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public String getSound(EntitySound inType, String inKey)
-	{
-		Object sounds = this.m_sounds.get(inType);
-		if(!(sounds instanceof Map))
-			return null;
-
-		return ((Map<String, String>)sounds).get(inKey);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public Map<String, String> getSounds(EntitySound inType)
-	{
-		Object sounds = this.m_sounds.get(inType);
-		if(sounds instanceof String)
-		{
-			Map<String, String> map = new HashMap<String, String>();
-			map.put("default", (String)sounds);
-			return map;
-		}
-		else
-		{
-			return (Map<String, String>)sounds;
-		}
-	}
-
-	@Override
-	public boolean hasSound(EntitySound inType)
-	{
-		return this.getSound(inType) != null;
-	}
-
-	@Override
-	public boolean hasSound(EntitySound inType, String inKey)
-	{
-		return this.getSound(inType, inKey) != null;
-	}
-
-	@Override
-	public void setSound(EntitySound inType, String inSound)
-	{
-		this.m_sounds.put(inType, inSound);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void setSound(EntitySound inType, String inKey, String inSound)
-	{
-		Object sounds = this.m_sounds.get(inType);
-		if(sounds instanceof String)
-		{
-			Map<String, String> map = new HashMap<String, String>();
-			map.put(inKey, inSound);
-			this.m_sounds.put(inType, map);
-		}
-		else
-			((Map<String, String>)sounds).put(inKey, inSound);
-	}
-
-	@Override
-	public void setSounds(EntitySound inType, Map<String, String> inSounds)
-	{
-		this.m_sounds.put(inType, inSounds);
-	}
-
 	public String getName()
 	{
 		if(!this.isSpawned())
@@ -633,9 +390,9 @@ public abstract class RemoteBaseEntity<T extends LivingEntity> implements Remote
 		return this.m_unloadedLocation;
 	}
 
-	java.util.Vector onPush(double inX, double inY, double inZ)
+	Vector onPush(double inX, double inY, double inZ)
 	{
-		RemoteEntityPushEvent event = new RemoteEntityPushEvent(this, new java.util.Vector(inX, inY, inZ));
+		RemoteEntityPushEvent event = new RemoteEntityPushEvent(this, new Vector(inX, inY, inZ));
 		event.setCancelled(!this.isPushable() || this.isStationary());
 		Bukkit.getPluginManager().callEvent(event);
 
