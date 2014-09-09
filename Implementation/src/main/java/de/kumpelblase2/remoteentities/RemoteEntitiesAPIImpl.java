@@ -1,15 +1,15 @@
 package de.kumpelblase2.remoteentities;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import de.kumpelblase2.remoteentities.api.DespawnReason;
-import de.kumpelblase2.remoteentities.api.RemoteEntity;
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import de.kumpelblase2.remoteentities.api.DespawnReason;
+import de.kumpelblase2.remoteentities.api.RemoteEntity;
 
 class RemoteEntitiesAPIImpl implements RemoteEntitiesAPI
 {
@@ -103,7 +103,6 @@ class RemoteEntitiesAPIImpl implements RemoteEntitiesAPI
 	protected void setupEngine()
 	{
 		this.m_jruby.put("MC_VERSION", null/*TODO*/);
-		this.m_jruby.put("SUPPORTED_VERSIONS", this.getPlugin().getConfig().get("versions.supported_versions"));
 		this.m_jruby.put("PLUGIN", this.getPlugin());
 		try
 		{
