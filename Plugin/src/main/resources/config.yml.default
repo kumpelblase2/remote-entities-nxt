@@ -1,0 +1,6 @@
+update:
+  enabled: true
+  url: 'http://re.infinityblade.de'
+
+versions:
+  use: latest # Or a specific version for the current rev
