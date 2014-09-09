@@ -1,18 +1,15 @@
 package de.kumpelblase2.remoteentities;
 
-import de.kumpelblase2.remoteentities.api.DespawnReason;
-import de.kumpelblase2.remoteentities.api.RemoteEntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import de.kumpelblase2.remoteentities.api.DespawnReason;
+import de.kumpelblase2.remoteentities.api.RemoteEntityType;
 
 public class RemoteEntitiesMain extends JavaPlugin
 {
 	private RemoteEntitiesAPI m_entitiesAPI;
-	private static final String[] SUPPORTED_VERSIONS = {
-			"1.7_R0.1"
-	};
 
 	@Override
 	public void onDisable()
@@ -27,8 +24,6 @@ public class RemoteEntitiesMain extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
-		this.setupConfig();
-
 		this.m_entitiesAPI = new RemoteEntitiesAPIImpl(this);
 		RemoteEntityType.update();
 		this.getServer().getPluginManager().registerEvents(new DisableListener(), this);
@@ -36,12 +31,6 @@ public class RemoteEntitiesMain extends JavaPlugin
 			RemoteEntities.setImplementation(this.m_entitiesAPI);
 
 		super.onEnable();
-	}
-
-	private void setupConfig()
-	{
-		this.getConfig().set("versions.allow_unsupported", this.getConfig().get("versions.allow_unsupported", false));
-		this.getConfig().set("versions.supported", this.getConfig().get("versions.supported", SUPPORTED_VERSIONS));
 	}
 
 	class DisableListener implements Listener
