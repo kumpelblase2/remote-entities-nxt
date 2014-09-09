@@ -3,6 +3,8 @@ require 'namespace'
 require 'base'
 require 'service'
 require 'extensions'
+require 'definition_loader'
+require 'definition_executor'
 
 module RemoteEntities
 	class RemoteEntityManagerFactory

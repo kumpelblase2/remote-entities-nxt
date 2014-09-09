@@ -33,6 +33,14 @@ response should look like this:
 
 
 module RemoteEntities
+	class DefinitionHash < Hash
+		def latest
+			versions = self[$MC_VERSION.to_sym]
+			(versions.sort { |x ,y| y <=> x })[0]
+		end
+	end
+
+
 	class DefinitionLoader
 		attr_reader :bundled_definitions
 		attr_reader :latest_version
@@ -41,7 +49,7 @@ module RemoteEntities
 
 		def initialize
 			@bundled_definitions = METHODS
-			@loaded_definitions = Hash.new({})
+			@loaded_definitions = RemoteEntities::DefinitionHash.new({})
 			request_versions if RemoteEntities.plugin.config.get_boolean('update.enabled', true)
 		end
 

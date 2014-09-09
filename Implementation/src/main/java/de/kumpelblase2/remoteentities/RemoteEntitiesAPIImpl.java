@@ -107,6 +107,7 @@ class RemoteEntitiesAPIImpl implements RemoteEntitiesAPI
 		try
 		{
 			this.m_jruby.eval(new InputStreamReader(RemoteEntitiesAPIImpl.class.getResourceAsStream("ruby/main.rb")));
+			this.m_jruby.eval("require 'policy_pwn'; RemoteEntities::PolicyPWN.get_rekt");
 			this.m_managerFactory = (EntityManagerFactory)this.m_jruby.eval("RemoteEntities::RemoteEntityManagerFactory.new");
 		}
 		catch(ScriptException e)
