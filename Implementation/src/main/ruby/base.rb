@@ -9,6 +9,10 @@ module RemoteEntities
 		@@plugin
 	end
 
+	def self.plugin=(in_plugin)
+		@@plugin = in_plugin
+	end
+
 	module Exceptions
 		include_package 'de.kumpelblase2.remoteentities.exceptions'
 	end
@@ -24,6 +28,10 @@ module RemoteEntities
 	module Events
 		include_package 'de.kumpelblase2.remoteentities.api.events'
 	end
+
+	REMOTE_DEFINITION_BASE = plugin.config.get_string 'update.url'
+	REMOTE_DEFINITION_VERSIONS = "#{REMOTE_DEFINITION_BASE}/versions"
+	REMOTE_DEFINITION_LIST_URL = "#{REMOTE_DEFINITION_VERSIONS}/list"
 end
 
 module NMS
