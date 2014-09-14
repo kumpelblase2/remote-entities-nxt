@@ -8,7 +8,7 @@ module RemoteEntities
 
 			def attack(in_target)
 				if self.is_spawned
-					# todo set goal target
+					self.entity.goal_target = in_target.nms_handle
 				end
 			end
 

@@ -13,8 +13,16 @@ module RemoteEntities
 		@@plugin = in_plugin
 	end
 
+	module Entities
+		include_package 'de.kumpelblase2.remoteentities.entities'
+	end
+
 	module Exceptions
 		include_package 'de.kumpelblase2.remoteentities.exceptions'
+	end
+
+	module Thinking
+		include_package 'de.kumpelblase2.remoteentities.api.thinking'
 	end
 
 	module Helpers
@@ -22,6 +30,10 @@ module RemoteEntities
 
 		module Ruby
 			include_package 'de.kumpelblase2.remoteentities.helper.ruby'
+		end
+
+		module World
+			include_package 'de.kumpelblase2.remoteentities.helper.world'
 		end
 	end
 
