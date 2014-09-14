@@ -6,7 +6,7 @@ module RemoteEntities
 		module EntitySounds
 			class << self
 				def setup_sounds
-					my_sounds = SOUNDS[self.type.name.to_sym]
+					my_sounds = SOUNDS[self.type.name.to_sym] # TODO self.type won't work
 					my_sounds.each { |type, value|
 						self.set_sound type, value
 					}
