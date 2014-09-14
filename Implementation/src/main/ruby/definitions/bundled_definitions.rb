@@ -48,7 +48,12 @@ module RemoteEntities
 					:last_attack_tick => 'aK'
 				},
 				:bat => {
-					:tick_movement => 'bq'
+					:tick_movement => 'bq',
+					:is_hanging? => 'bN',
+					:hanging= => {
+						:name => 'a',
+						:params => %w(boolean)
+					}
 				},
 				:wolf => {
 					:sitting= => {
