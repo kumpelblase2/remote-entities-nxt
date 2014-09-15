@@ -6,7 +6,10 @@ module RemoteEntities
 		module RemoteMethodDefaults
 			def self.included(base)
 				base.class_eval do
-					base.send :include, RemoteUpdate, RemoteCollide, RemoteDeath, RemoteUpdate, RemoteInteract, RemotePush, RemoteNewAI
+					base.send :include, RemoteEntities::EntityMixins::CustomOverrider
+					base.send :include, RemoteUpdate, RemoteCollide, RemoteDeath
+					base.send :include, RemoteUpdate, RemoteInteract, RemotePush
+					base.send :include, RemoteNewAI, RemoteRide, RemoteSound
 				end
 			end
 		end
@@ -14,7 +17,7 @@ module RemoteEntities
 		module RemoteUpdate
 			def self.included(base)
 				base.class_eval do
-					override_for :type => :default, :method => :update
+					override_for :method => :update
 					def remote_update
 						super
 						self.remote_entity.mind.tick if self.remote_entity
@@ -26,7 +29,7 @@ module RemoteEntities
 		module RemoteNewAI
 			def self.included(base)
 				base.class_eval do
-					override_for :type => :default, :method => :new_ai?
+					override_for :method => :new_ai?
 					def remote_new_ai
 						true
 					end
@@ -37,7 +40,7 @@ module RemoteEntities
 		module RemoteCollide
 			def self.included(base)
 				base.class_eval do
-					override_for :type => :default, :method => :collide
+					override_for :method => :collide
 					def remote_collide(in_entity)
 						if self.remote_entity
 							if not @last_bounced_id or @last_bounced_id != in_entity.entity_id or (Time.now - @last_bounced_time) > 1
@@ -64,7 +67,7 @@ module RemoteEntities
 		module RemoteDeath
 			def self.included(base)
 				base.class_eval do
-					override_for :type => :default, :method => :death
+					override_for :method => :death
 					def remote_death(in_damage_source)
 						if self.remote_entity.mind.has_behavior(RemoteEntities::Thinking::DeathBehavior)
 							self.remote_entity.mind.get_behavior(RemoteEntities::Thinking::DeathBehavior).on_death
@@ -81,7 +84,7 @@ module RemoteEntities
 		module RemotePush
 			def self.included(base)
 				base.class_eval do
-					override_for :type => :default, :method => :push
+					override_for :method => :push
 					def remote_push(in_x, in_y, in_z)
 						event = RemoteEntities::Events::RemoteEntityPushEvent.new self.remote_entity, Java::org.bukkit.util.Vector.new(in_x, in_y, in_z)
 						event.cancelled = (not self.remote_entity.is_pushable or self.remote_entity.is_stationary)
@@ -98,7 +101,7 @@ module RemoteEntities
 		module RemoteInteract
 			def self.included(base)
 				base.class_eval do
-					override_for :type => :default, :method => :interact
+					override_for :method => :interact
 					def remote_interact(in_entity)
 						if in_entity.bukkit_entity.is_a?(org.bukkit.entity.Player)
 							if self.remote_entity.features.has_feature(RemoteEntities::Features::TradingFeature)
@@ -120,6 +123,42 @@ module RemoteEntities
 						else
 							super
 						end
+					end
+				end
+			end
+		end
+
+		module RemoteRide
+			def self.included(base)
+				base.class_eval do
+					override_for :method => :apply_motion
+					def remote_ride(in_x, in_z)
+						motion = [in_x, in_z, self.motY]
+						self.remote_entity.mind.get_behavior(RemoteEntities::Thinking::RideBehavior).ride(motion) if self.remote_entity.mind.has_behavior(RemoteEntities::Thinking::RideBehavior)
+
+						self.motY = motion[2]
+						super motion[0], motion[1]
+					end
+				end
+			end
+		end
+
+		module RemoteSound
+			def self.included(base)
+				base.class_eval do
+					override_for :method => :random_sound
+					def remote_random_sound
+						self.remote_entity.get_sound(RemoteEntities::EntitySound::RANDOM)
+					end
+
+					override_for :method => :hurt_sound
+					def remote_hurt_sound
+						self.remote_entity.get_sound(RemoteEntities::EntitySound::HURT)
+					end
+
+					override_for :method => :death_sound
+					def remote_death_sound
+						self.remote_entity.get_sound(RemoteEntities::EntitySound::DEATH)
 					end
 				end
 			end

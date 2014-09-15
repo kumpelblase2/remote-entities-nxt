@@ -7,7 +7,7 @@ module RemoteEntities
 			@override_for = nil
 
 			def override_for(opts = {})
-				default = { :package => :nms }
+				default = { :package => :entities, :type => :default }
 				opts = default.merge opts
 				@override_for = opts
 			end
