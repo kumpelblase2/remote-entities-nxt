@@ -4,7 +4,7 @@ require 'base_attacking_entity'
 require '../mixins/custom_overrider'
 require '../mixins/sounds'
 require '../mixins/entity_handle'
-require '../mixins/remote_update'
+require '../mixins/remote_method_definitions'
 
 module RemoteEntities
 	module Entities
@@ -22,9 +22,28 @@ module RemoteEntities
 		end
 
 		class RemoteBatEntity < NMS::EntityBat
-			extend RemoteEntities::EntityMixins::EntityHandle
-			extend RemoteEntities::EntityMixins::CustomOverrider
-			extend RemoteEntities::EntityMixins::RemoteUpdate
+			extend EntityMixins::EntityHandle
+			include EntityMixins::RemoteMethodDefaults
+
+			override_for :method => :random_sound
+			def remote_bat_random_sound
+				self.is_hanging? and self.random.next_int(4) != 0 ? nil : self.remote_entity.get_sound(RemoteEntities::EntitySound::SLEEPING)
+			end
+
+			override_for :type => :bat, :method => :tick_movement
+			def remote_tick_movement
+				self.aV += 1
+				self.w
+				self.entity_senses.a
+				self.target_selector.a
+				self.goal_selector.a
+				self.world.methodProfiler.b
+				self.navigation.update
+				self.bk #todo THIS IS WRONG
+				self.controller_move.c
+				self.controller_look.a
+				self.controller_jump.b
+			end
 		end
 	end
 end
