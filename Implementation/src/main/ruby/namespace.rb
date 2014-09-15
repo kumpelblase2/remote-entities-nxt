@@ -6,6 +6,9 @@ module RemoteEntities
 	module Events; end
 	module Services; end
 	module Features; end
+	module Thinking; end
 end
 
 module NMS; end
+
+module CB; end

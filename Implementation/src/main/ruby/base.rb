@@ -6,11 +6,7 @@ module RemoteEntities
 	include_package 'de.kumpelblase2.remoteentities.api'
 
 	def self.plugin
-		@@plugin
-	end
-
-	def self.plugin=(in_plugin)
-		@@plugin = in_plugin
+		$PLUGIN
 	end
 
 	module Entities
@@ -23,6 +19,10 @@ module RemoteEntities
 
 	module Thinking
 		include_package 'de.kumpelblase2.remoteentities.api.thinking'
+	end
+
+	module Features
+		include_package 'de.kumpelblase2.remoteentities.api.features'
 	end
 
 	module Helpers
@@ -47,14 +47,14 @@ module RemoteEntities
 end
 
 module NMS
-	include_package 'net.minecraft.server.v1_7_R1'
+	include_package "net.minecraft.server.#{$MC_VERSION}"
 end
 
-module CB # TODO Can you automatically map this?
-	include_package 'org.bukkit.craftbukkit.v1_7_R1'
+module CB # Can you automatically map this? -> Theoretically yes, but not reliably.
+	include_package "org.bukkit.craftbukkit.#{$MC_VERSION}"
 
 	module Inventory
-		include_package 'org.bukkit.craftbukkit.v1_7_R1.inventory'
+		include_package "org.bukkit.craftbukkit.#{$MC_VERSION}.inventory"
 	end
 end
 
