@@ -45,5 +45,10 @@ module RemoteEntities
 				self.controller_jump.b
 			end
 		end
+
+		bat_entry = RemoteEntities::RemoteEntityType::Bat
+		# todo might need to
+		bat_entry.set_remote_class RemoteBatImpl
+		bat_entry.set_entity_class RemoteBatEntity
 	end
 end

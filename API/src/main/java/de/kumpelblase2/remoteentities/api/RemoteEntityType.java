@@ -4,37 +4,36 @@ import java.util.*;
 
 public class RemoteEntityType
 {
-	/*
-		This needs to be done dynamically by the implementation
-	public static final RemoteEntityType Human = new RemoteEntityType("Human", RemotePlayer.class, RemotePlayerEntity.class, true);
-	public static final RemoteEntityType Zombie = new RemoteEntityType("Zombie", RemoteZombie.class, RemoteZombieEntity.class, false);
-	public static final RemoteEntityType Spider = new RemoteEntityType("Spider", RemoteSpider.class, RemoteSpiderEntity.class, false);
-	public static final RemoteEntityType Creeper = new RemoteEntityType("Creeper", RemoteCreeper.class, RemoteCreeperEntity.class, false);
-	public static final RemoteEntityType Skeleton = new RemoteEntityType("Skeleton", RemoteSkeleton.class, RemoteSkeletonEntity.class, false);
-	public static final RemoteEntityType Blaze = new RemoteEntityType("Blaze", RemoteBlaze.class, RemoteBlazeEntity.class, false);
-	public static final RemoteEntityType CaveSpider = new RemoteEntityType("CaveSpider", RemoteCaveSpider.class, RemoteCaveSpiderEntity.class, false);
-	public static final RemoteEntityType Chicken = new RemoteEntityType("Chicken", RemoteChicken.class, RemoteChickenEntity.class, false);
-	public static final RemoteEntityType Cow = new RemoteEntityType("Cow", RemoteCow.class, RemoteCowEntity.class, false);
-	public static final RemoteEntityType EnderDragon = new RemoteEntityType("EnderDragon", RemoteEnderDragon.class, RemoteEnderDragonEntity.class, false);
-	public static final RemoteEntityType Enderman = new RemoteEntityType("Enderman", RemoteEnderman.class, RemoteEndermanEntity.class, false);
-	public static final RemoteEntityType Ghast = new RemoteEntityType("Ghast", RemoteGhast.class, RemoteGhastEntity.class, false);
-	public static final RemoteEntityType IronGolem = new RemoteEntityType("IronGolem", RemoteIronGolem.class, RemoteIronGolemEntity.class, false);
-	public static final RemoteEntityType LavaSlime = new RemoteEntityType("LavaSlime", RemoteLavaSlime.class, RemoteLavaSlimeEntity.class, false);
-	public static final RemoteEntityType Mushroom = new RemoteEntityType("Mushroom", RemoteMushroom.class, RemoteMushroomEntity.class, false);
-	public static final RemoteEntityType Ocelot = new RemoteEntityType("Ocelote", RemoteOcelote.class, RemoteOceloteEntity.class, false);
-	public static final RemoteEntityType Pig = new RemoteEntityType("Pig", RemotePig.class, RemotePigEntity.class, false);
-	public static final RemoteEntityType Pigmen = new RemoteEntityType("Pigmen", RemotePigmen.class, RemotePigmenEntity.class, false);
-	public static final RemoteEntityType Sheep = new RemoteEntityType("Sheep", RemoteSheep.class, RemoteSheepEntity.class, false);
-	public static final RemoteEntityType Silverfish = new RemoteEntityType("Silverfish", RemoteSilverfish.class, RemoteSilverfishEntity.class, false);
-	public static final RemoteEntityType Slime = new RemoteEntityType("Slime", RemoteSlime.class, RemoteSlimeEntity.class, false);
-	public static final RemoteEntityType Snowman = new RemoteEntityType("Snowman", RemoteSnowman.class, RemoteSnowmanEntity.class, false);
-	public static final RemoteEntityType Squid = new RemoteEntityType("Squid", RemoteSquid.class, RemoteSquidEntity.class, false);
-	public static final RemoteEntityType Villager = new RemoteEntityType("Villager", RemoteVillager.class, RemoteVillagerEntity.class, false);
-	public static final RemoteEntityType Wolf = new RemoteEntityType("Wolf", RemoteWolf.class, RemoteWolfEntity.class, false);
-	public static final RemoteEntityType Witch = new RemoteEntityType("Witch", RemoteWitch.class, RemoteWitchEntity.class, false);
-	public static final RemoteEntityType Wither = new RemoteEntityType("Wither", RemoteWither.class, RemoteWitherEntity.class, false);
-	public static final RemoteEntityType Bat = new RemoteEntityType("Bat", RemoteBat.class, RemoteBatEntity.class, false);
-	public static final RemoteEntityType Horse = new RemoteEntityType("Horse", RemoteHorse.class, RemoteHorseEntity.class, false);*/
+	// We set them to null because we still want to have the static handle even though we don't have the implementation yet.
+	public static final RemoteEntityType Human = new RemoteEntityType("Human", null, null, true);
+	public static final RemoteEntityType Zombie = new RemoteEntityType("Zombie",null, null, false);
+	public static final RemoteEntityType Spider = new RemoteEntityType("Spider", null, null, false);
+	public static final RemoteEntityType Creeper = new RemoteEntityType("Creeper", null, null, false);
+	public static final RemoteEntityType Skeleton = new RemoteEntityType("Skeleton", null, null, false);
+	public static final RemoteEntityType Blaze = new RemoteEntityType("Blaze", null, null, false);
+	public static final RemoteEntityType CaveSpider = new RemoteEntityType("CaveSpider", null, null, false);
+	public static final RemoteEntityType Chicken = new RemoteEntityType("Chicken", null, null, false);
+	public static final RemoteEntityType Cow = new RemoteEntityType("Cow", null, null, false);
+	public static final RemoteEntityType EnderDragon = new RemoteEntityType("EnderDragon", null, null, false);
+	public static final RemoteEntityType Enderman = new RemoteEntityType("Enderman", null, null, false);
+	public static final RemoteEntityType Ghast = new RemoteEntityType("Ghast", null, null, false);
+	public static final RemoteEntityType IronGolem = new RemoteEntityType("IronGolem", null, null, false);
+	public static final RemoteEntityType LavaSlime = new RemoteEntityType("LavaSlime", null, null, false);
+	public static final RemoteEntityType Mushroom = new RemoteEntityType("Mushroom", null, null, false);
+	public static final RemoteEntityType Ocelot = new RemoteEntityType("Ocelote", null, null, false);
+	public static final RemoteEntityType Pig = new RemoteEntityType("Pig", null, null, false);
+	public static final RemoteEntityType Pigmen = new RemoteEntityType("Pigmen", null, null, false);
+	public static final RemoteEntityType Sheep = new RemoteEntityType("Sheep", null, null, false);
+	public static final RemoteEntityType Silverfish = new RemoteEntityType("Silverfish", null, null, false);
+	public static final RemoteEntityType Slime = new RemoteEntityType("Slime", null, null, false);
+	public static final RemoteEntityType Snowman = new RemoteEntityType("Snowman", null, null, false);
+	public static final RemoteEntityType Squid = new RemoteEntityType("Squid", null, null, false);
+	public static final RemoteEntityType Villager = new RemoteEntityType("Villager", null, null, false);
+	public static final RemoteEntityType Wolf = new RemoteEntityType("Wolf", null, null, false);
+	public static final RemoteEntityType Witch = new RemoteEntityType("Witch", null, null, false);
+	public static final RemoteEntityType Wither = new RemoteEntityType("Wither", null, null, false);
+	public static final RemoteEntityType Bat = new RemoteEntityType("Bat", null, null, false);
+	public static final RemoteEntityType Horse = new RemoteEntityType("Horse", null, null, false);
 
 	private static List<RemoteEntityType> values;
 	private static RemoteEntityType[] lastConvert = new RemoteEntityType[0];
