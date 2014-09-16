@@ -2,7 +2,6 @@ require '../base'
 require '../namespace'
 require 'base_attacking_entity'
 require '../mixins/custom_overrider'
-require '../mixins/sounds'
 require '../mixins/entity_handle'
 require '../mixins/remote_method_definitions'
 
@@ -10,7 +9,6 @@ module RemoteEntities
 	module Entities
 		class RemoteBatImpl < BaseAttackingEntity
 			include RemoteEntities::Entities::RemoteBat
-			include RemoteEntities::EntityMixins::EntitySounds
 
 			def is_hanging
 				self.entity.is_hanging?
