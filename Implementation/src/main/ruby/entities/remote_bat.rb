@@ -31,7 +31,7 @@ module RemoteEntities
 			end
 
 			override_for :type => :bat, :method => :tick_movement
-			def remote_tick_movement
+			def remote_tick_movement # TODO this needs updating
 				self.aV += 1
 				self.w
 				self.entity_senses.a
@@ -39,16 +39,13 @@ module RemoteEntities
 				self.goal_selector.a
 				self.world.methodProfiler.b
 				self.navigation.update
-				self.bk #todo THIS IS WRONG
+				self.bk
 				self.controller_move.c
 				self.controller_look.a
 				self.controller_jump.b
 			end
 		end
 
-		bat_entry = RemoteEntities::RemoteEntityType::Bat
-		# todo might need to
-		bat_entry.set_remote_class RemoteBatImpl
-		bat_entry.set_entity_class RemoteBatEntity
+		update_type :Bat, RemoteBatImpl, RemoteBatEntity
 	end
 end
