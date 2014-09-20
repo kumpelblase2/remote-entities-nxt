@@ -11,12 +11,6 @@ module RemoteEntities
 
 	module Entities
 		include_package 'de.kumpelblase2.remoteentities.entities'
-
-		def self.update_type(in_type, in_remote, in_native)
-			type = RemoteEntities::RemoteEntityType.value_of in_type
-			type.set_remote_class in_remote
-			type.set_entity_class in_native
-		end
 	end
 
 	module Exceptions

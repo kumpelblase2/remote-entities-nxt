@@ -1,5 +1,4 @@
 require '../base'
-require '../namespace'
 require 'base_attacking_entity'
 require '../mixins/custom_overrider'
 require '../mixins/entity_handle'
@@ -43,7 +42,5 @@ module RemoteEntities
 				self.controller_jump.b
 			end
 		end
-
-		update_type :Bat, RemoteBatImpl, RemoteBatEntity
 	end
 end
