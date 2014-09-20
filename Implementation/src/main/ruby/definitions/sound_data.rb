@@ -20,6 +20,18 @@ SOUNDS = {
 		RemoteEntities::EntitySound::HURT => 'mob.zombie.hurt',
 		RemoteEntities::EntitySound::DEATH => 'mob.zombie.death',
 		RemoteEntities::EntitySound::STEP => 'mob.zombie.step'
+	},
+
+	:Wolf => {
+		RemoteEntities::EntitySound::RANDOM => {
+			:growl => 'mob.wolf.growl',
+			:whine => 'mob.wolf.whine',
+			:panting => 'mob.wolf.panting',
+			:bark => 'mob.wolf.bark'
+		},
+		RemoteEntities::EntitySound::HURT => 'mob.wolf.hurt',
+		RemoteEntities::EntitySound::DEATH => 'mob.wolf.death',
+		RemoteEntities::EntitySound::STEP => 'mob.wolf.step'
 	}
 
 	#TODO
