@@ -89,6 +89,7 @@ module RemoteEntities
 				:Navigation => {
 					:stop => 'h',
 					:has_path? => 'g',
+					:update => 'f',
 					:speed= => {
 						:name => 'a',
 						:params => %w(int)
