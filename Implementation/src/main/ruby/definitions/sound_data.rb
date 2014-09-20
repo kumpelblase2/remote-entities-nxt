@@ -13,6 +13,13 @@ SOUNDS = {
 		RemoteEntities::EntitySound::SLEEPING => 'mob.bat.idle',
 		RemoteEntities::EntitySound::HURT => 'mob.bat.hurt',
 		RemoteEntities::EntitySound::DEATH => 'mob.bat.death'
+	},
+
+	:Zombie => {
+		RemoteEntities::EntitySound::RANDOM => 'mob.zombie.say',
+		RemoteEntities::EntitySound::HURT => 'mob.zombie.hurt',
+		RemoteEntities::EntitySound::DEATH => 'mob.zombie.death',
+		RemoteEntities::EntitySound::STEP => 'mob.zombie.step'
 	}
 
 	#TODO
