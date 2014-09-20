@@ -1,12 +1,10 @@
 require '../namespace'
 require 'base_entity'
-require '../mixins/sounds'
 
 module RemoteEntities
 	module Entities
 		class BaseAttackingEntity < Entities::BaseEntity
 			include Java::de.kumpelblase2.remoteentities.api.Fightable
-			include RemoteEntities::EntityMixins::EntitySounds
 
 			def attack(in_target)
 				if self.is_spawned

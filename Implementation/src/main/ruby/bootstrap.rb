@@ -1,4 +1,3 @@
-require 'base'
 require 'policy_pwn'
 require 'entity_setup'
 
