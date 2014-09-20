@@ -32,6 +32,12 @@ SOUNDS = {
 		RemoteEntities::EntitySound::HURT => 'mob.wolf.hurt',
 		RemoteEntities::EntitySound::DEATH => 'mob.wolf.death',
 		RemoteEntities::EntitySound::STEP => 'mob.wolf.step'
+	},
+
+	:Wither => {
+		RemoteEntities::EntitySound::RANDOM => 'mob.wither.idle',
+		RemoteEntities::EntitySound::HURT => 'mob.wither.hurt',
+		RemoteEntities::EntitySound::DEATH => 'mob.wither.death'
 	}
 
 	#TODO
