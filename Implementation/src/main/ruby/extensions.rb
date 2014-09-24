@@ -3,6 +3,7 @@ require 'base'
 
 class Object
 	def nms_handle;
+		self
 	end
 
 	def setup_sounds;
