@@ -58,6 +58,10 @@ module CB # Can you automatically map this? -> Theoretically yes, but not reliab
 	end
 end
 
+module Bukkit
+	include_package 'org.bukkit'
+end
+
 def bukkit
 	Java::org.bukkit.Bukkit
 end

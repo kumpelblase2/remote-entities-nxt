@@ -7,8 +7,11 @@ module RemoteEntities
 	module Services; end
 	module Features; end
 	module Thinking; end
+	module Desires; end
 end
 
 module NMS; end
 
 module CB; end
+
+module Bukkit; end
