@@ -189,9 +189,27 @@ SOUNDS = {
 	},
 
 	:Creeper => {
-			RemoteEntities::EntitySound::RANDOM => 'mob.creeper.say',
-			RemoteEntities::EntitySound::DEATH => 'mob.creeper.death'
-	}
+		RemoteEntities::EntitySound::RANDOM => 'mob.creeper.say',
+		RemoteEntities::EntitySound::DEATH => 'mob.creeper.death'
+	},
 
-	#TODO
+	:Blaze => {
+		RemoteEntities::EntitySound::RANDOM => 'mob.blaze.breathe',
+		RemoteEntities::EntitySound::DEATH => 'mob.blaze.death',
+		RemoteEntities::EntitySound::HURT => 'mob.blaze.hit'
+	},
+
+	:CaveSpider => {
+		RemoteEntities::EntitySound::RANDOM => 'mob.spider.say',
+		RemoteEntities::EntitySound::HURT => 'mob.spider.say',
+		RemoteEntities::EntitySound::DEATH => 'mob.spider.death',
+		RemoteEntities::EntitySound::STEP => 'mob.spider.step'
+	},
+
+	:Chicken => {
+		RemoteEntities::EntitySound::RANDOM => 'mob.chicken.say',
+		RemoteEntities::EntitySound::HURT => 'mob.chicken.hurt',
+		RemoteEntities::EntitySound::DEATH => 'mob.chicken.hurt',
+		RemoteEntities::EntitySound::STEP => 'mob.chicken.step'
+	}
 }
