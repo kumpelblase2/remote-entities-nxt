@@ -46,15 +46,18 @@ module RemoteEntities
 	REMOTE_DEFINITION_LIST_URL = "#{REMOTE_DEFINITION_VERSIONS}/list"
 end
 
+NMS_PACKAGE = "net.minecraft.server.#{$MC_VERSION}"
+CB_PACKAGE = "org.bukkit.craftbukkit.#{$MC_VERSION}"
+
 module NMS
-	include_package "net.minecraft.server.#{$MC_VERSION}"
+	include_package NMS_PACKAGE
 end
 
 module CB # Can you automatically map this? -> Theoretically yes, but not reliably.
-	include_package "org.bukkit.craftbukkit.#{$MC_VERSION}"
+	include_package CB_PACKAGE
 
 	module Inventory
-		include_package "org.bukkit.craftbukkit.#{$MC_VERSION}.inventory"
+		include_package "#{CB_PACKAGE}.inventory"
 	end
 end
 
