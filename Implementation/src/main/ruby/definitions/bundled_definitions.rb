@@ -36,7 +36,11 @@ module RemoteEntities
 				},
 				:creature => {
 					:has_home_area? => 'bS',
-					:home_range => 'bU'
+					:home_range => 'bU',
+					:relative_light_power_at => {
+							:name => 'a',
+							:params => %w(int int int)
+					}
 				},
 				:insentient => {
 					:on_leash? => 'bH',
@@ -64,6 +68,12 @@ module RemoteEntities
 				:animal => {
 					:is_affected? => 'cc',
 					:reset_affection => 'cd'
+				},
+				:ironGolem => {
+					:flower_in_hand= => {
+						:name => 'a',
+						:params => %w(boolean)
+					}
 				}
 			},
 			:nms => {
@@ -84,6 +94,10 @@ module RemoteEntities
 					:break_status= => {
 						:name => 'd',
 						:params => %w(int int int int int)
+					},
+					:light_power_at => {
+						:name => 'n',
+						:params => %w(int int int)
 					}
 				},
 				:Navigation => {
@@ -97,6 +111,10 @@ module RemoteEntities
 					:create_path => {
 						:name => 'a',
 						:params => %w(double double double)
+					},
+					:can_swim= => {
+						:name => 'e',
+						:params => %w(boolean)
 					}
 				},
 				:BlockDoor => {
