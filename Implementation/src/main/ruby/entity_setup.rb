@@ -21,9 +21,14 @@ module RemoteEntities
 			end
 
 			def with_classes(in_remote_class, in_entity_class)
-				type = RemoteEntities::RemoteEntityType.value_of in_type
+				type = RemoteEntities::RemoteEntityType.value_of @type
 				type.set_remote_class in_remote_class
 				type.set_entity_class in_entity_class
+			end
+
+			def with_default_desires(opts = {})
+				options = { movement_method: :default_movement_desires, target_desires: :default_target_desires }.merge opts
+				# TODO
 			end
 		end
 	end
