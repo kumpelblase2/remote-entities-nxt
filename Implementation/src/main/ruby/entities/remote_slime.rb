@@ -20,7 +20,10 @@ module RemoteEntities
 				self.w
 				self.a @target, 10.0, 20.0 if @target
 
-				@jump_delay-- if self.on_ground
+				if self.on_ground
+					@jump_delay -= 1
+				end
+
 				if self.on_ground and @jump_delay <= 0
 					@jump_delay = self.bP
 					@jump_delay /= 3 if @target
