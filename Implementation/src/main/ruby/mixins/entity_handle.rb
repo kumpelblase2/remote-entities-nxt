@@ -15,7 +15,10 @@ module RemoteEntities
 				@remote_entity = in_entity
 				RemoteEntities::Helpers::World::PathfinderGoalSelectorHelper.new(self.goalSelector).clear_goals
 				RemoteEntities::Helpers::World::PathfinderGoalSelectorHelper.new(self.targetSelector).clear_goals
+				self.on_create
 			end
+
+			def on_create;	end
 		end
 	end
 end
