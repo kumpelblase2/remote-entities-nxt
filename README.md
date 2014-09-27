@@ -1,7 +1,15 @@
-Remote-Entities
+Remote-Entities-NXT
 ===============
 
-A library that enables you to control and customize entities in minecraft.
+You believe that NMS has no future? Always needing to get updated? Package changes all day? Hehehe, it's time to change that. "That is madness!"; No, THIS IS THE NEXT GENERATION!
+Remote Entites NXT, old principles, new power. Time to wrek!
+
+Ideas:
+- Use ruby for making ALL THE THINGS dynamic
+- Use ruby for making ALL THE THINGS customizeable without rebuilding
+- Use ruby for making ALL THE THINGS overrideable so we can share one common code base
+- Use ruby for ****ing up policies that hold us back from doing what we want to do
+- Use JRuby to make ruby even nicer
 
 Pull-Requests
 =============
