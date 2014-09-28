@@ -3,7 +3,7 @@ require '../namespace'
 
 module RemoteEntities
 	module Desires
-		class TempFollowCarrotStick < NMS::PathfindergoalPassengerCarrotStick
+		class TempFollowCarrotStick < NMS::PathfinderGoalPassengerCarrotStick
 			def setup(in_remote)
 				@remote = in_remote
 			end
