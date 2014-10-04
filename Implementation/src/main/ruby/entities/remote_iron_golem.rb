@@ -3,7 +3,7 @@ require '../namespace'
 
 module RemoteEntities
 	module Entities
-		class RemoteSlimeImpl < BaseAttackingEntity
+		class RemoteIronGolemImpl < BaseAttackingEntity
 			include RemoteEntities::Entities::RemoteIronGolem
 		end
 
