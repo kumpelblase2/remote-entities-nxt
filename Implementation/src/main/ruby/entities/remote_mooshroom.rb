@@ -3,7 +3,7 @@ require '../namespace'
 
 module RemoteEntities
 	module Entities
-		class RemoteMooshroomImpl < BaseAttackingEntity
+		class RemoteMooshroomImpl < BaseEntity
 			include RemoteEntities::RemoteMooshroom
 		end
 
