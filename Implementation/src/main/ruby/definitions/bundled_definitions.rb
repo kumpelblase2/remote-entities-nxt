@@ -32,7 +32,8 @@ module RemoteEntities
 					:distance_to_location => {
 						:name => 'e',
 						:params => %w(double double double)
-					}
+					},
+					:update_free_movement => 'e'
 				},
 				:creature => {
 					:has_home_area? => 'bS',
