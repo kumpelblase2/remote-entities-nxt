@@ -37,6 +37,14 @@ class Object
 		end
 	end
 
+	def is_remote_entity?
+		Java::de.kumpelblase2.remoteentities.RemoteEntities.is_remote_entity self
+	end
+
+	def remote_entity
+		Java::de.kumpelblase2.remoteentities.RemoteEntities.get_remote_entity_from_entity self if self.is_remote_entity?
+	end
+
 	def max_head_rotation
 		40
 	end

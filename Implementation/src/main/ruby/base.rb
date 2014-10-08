@@ -63,6 +63,18 @@ end
 
 module Bukkit
 	include_package 'org.bukkit'
+
+	module Events
+		include_package 'org.bukkit.event'
+
+		module Entity
+			include_package 'org.bukkit.event.entity'
+		end
+	end
+
+	module Entity
+		include_package 'org.bukkit.entity'
+	end
 end
 
 def bukkit

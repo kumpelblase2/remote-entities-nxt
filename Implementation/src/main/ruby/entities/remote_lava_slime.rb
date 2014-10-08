@@ -3,11 +3,11 @@ require '../namespace'
 
 module RemoteEntities
 	module Entities
-		class RemoteSlimeImpl < BaseAttackingEntity
-			include RemoteEntities::Entities::RemoteSlime
+		class RemoteLavaSlimeImpl < BaseAttackingEntity
+			include RemoteEntities::Entities::RemoteLavaSlime
 		end
 
-		class RemoteSlimeEntity < NMS::EntitySlime
+		class RemoteLavaSlimeEntity < NMS::EntityMagmaCube
 			extend RemoteEntities::EntityMixins::EntityHandle
 			include RemoteEntities::EntityMixins::RemoteMethodDefaults
 			include RemoteEntities::EntityMixins::RemoteSlimeUpdate

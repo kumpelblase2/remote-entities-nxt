@@ -1,6 +1,6 @@
 require 'java'
-require 'namespace'
-require 'base'
+require '../namespace'
+require '../base'
 
 module RemoteEntities
 	class ChunkEntityLoader

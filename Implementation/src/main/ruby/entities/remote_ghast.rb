@@ -3,17 +3,21 @@ require '../namespace'
 
 module RemoteEntities
 	module Entities
-		class RemoteSlimeImpl < BaseAttackingEntity
-			include RemoteEntities::Entities::RemoteSlime
+		class RemoteGhastImpl < BaseAttackingEntity
+			include RemoteEntities::Entities::RemoteGhast
 		end
 
-		class RemoteSlimeEntity < NMS::EntitySlime
+		class RemoteGhastEntity < NMS::EntityGhast
 			extend RemoteEntities::EntityMixins::EntityHandle
 			include RemoteEntities::EntityMixins::RemoteMethodDefaults
-			include RemoteEntities::EntityMixins::RemoteSlimeUpdate
 
-			def on_create
-				@jump_delay = self.random.next_int(20) + 10
+			# TODO do we need the override? or can we maybe just use attr_accessor ?
+			def target=(in_target)
+				@target = in_target
+			end
+
+			def target
+				@target
 			end
 
 			def self.default_movement_desires

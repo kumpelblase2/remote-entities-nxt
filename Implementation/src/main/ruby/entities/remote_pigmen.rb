@@ -3,18 +3,13 @@ require '../namespace'
 
 module RemoteEntities
 	module Entities
-		class RemoteSlimeImpl < BaseAttackingEntity
-			include RemoteEntities::Entities::RemoteSlime
+		class RemotePigmenImpl < BaseAttackingEntity
+			include RemoteEntities::Entities::RemotePigmen
 		end
 
-		class RemoteSlimeEntity < NMS::EntitySlime
+		class RemotePigmenEntity < NMS::EntityPigZombie
 			extend RemoteEntities::EntityMixins::EntityHandle
 			include RemoteEntities::EntityMixins::RemoteMethodDefaults
-			include RemoteEntities::EntityMixins::RemoteSlimeUpdate
-
-			def on_create
-				@jump_delay = self.random.next_int(20) + 10
-			end
 
 			def self.default_movement_desires
 				[

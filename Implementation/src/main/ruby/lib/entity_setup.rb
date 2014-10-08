@@ -1,4 +1,5 @@
-require 'base'
+require '../namespace'
+require '../base'
 
 module RemoteEntities
 	module Entities
