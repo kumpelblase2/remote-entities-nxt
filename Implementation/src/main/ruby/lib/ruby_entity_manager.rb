@@ -1,14 +1,17 @@
 require 'java'
-require 'namespace'
-require 'base'
+require '../namespace'
+require '../base'
 require 'chunk_entity_loader'
+require '../helper/entity_explode_listener'
 
 module RemoteEntities
 	class RubyEntityManager < Java::de.kumpelblase2.remoteentities.BaseEntityManager
 
 		def setup(in_plugin)
 			@chunk_loader = RemoteEntities::ChunkEntityLoader.new self
+			@explode_listener = RemoteEntities::Helpers::EnderDragonExplodeHandler.new
 			bukkit.plugin_manager.register_events @chunk_loader, RemoteEntities.plugin
+			bukkit.plugin_manager.register_events @explode_listener, RemoteEntities.plugin
 			bukkit.scheduler.schedule_sync_repeating_task in_plugin, DespawnDead.new(self), 100, 100
 		end
 

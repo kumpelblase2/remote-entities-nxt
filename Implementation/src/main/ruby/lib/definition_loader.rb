@@ -1,9 +1,9 @@
 require 'net/http'
 require 'IO'
 require 'json' # TODO how to do maven with it?
-require 'namespace'
-require 'base'
-require 'definitions/bundled_definitions'
+require '../namespace'
+require '../base'
+require '../definitions/bundled_definitions'
 
 DEF_VERSION = plugin.config.get_string :def_version
 

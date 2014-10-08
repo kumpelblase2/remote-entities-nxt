@@ -1,5 +1,5 @@
-require 'namespace'
-require 'base'
+require '../namespace'
+require '../base'
 require 'java'
 
 module RemoteEntities
