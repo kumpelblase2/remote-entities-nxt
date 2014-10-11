@@ -1,15 +1,17 @@
 package de.kumpelblase2.remoteentities.api;
 
 import java.util.*;
+import org.bukkit.Location;
+import org.bukkit.entity.LivingEntity;
 import de.kumpelblase2.remoteentities.EntityManager;
 import de.kumpelblase2.remoteentities.api.features.FeatureSet;
 import de.kumpelblase2.remoteentities.api.thinking.Mind;
 import de.kumpelblase2.remoteentities.persistence.ISingleEntitySerializer;
-import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
 
 public abstract class BaseRemoteEntity implements RemoteEntity
 {
+	private static final String CUSTOM_NAME = "Custom";
+
 	private final int m_id;
 	private final Mind m_mind;
 	private final EntityManager m_manager;
@@ -52,6 +54,12 @@ public abstract class BaseRemoteEntity implements RemoteEntity
 	public void spawn(Location inLocation)
 	{
 		this.spawn(inLocation, false);
+	}
+
+	@Override
+	public void teleport(final Location inLocation)
+	{
+		this.getBukkitEntity().teleport(inLocation);
 	}
 
 	@Override
@@ -212,5 +220,11 @@ public abstract class BaseRemoteEntity implements RemoteEntity
 	public void setSounds(EntitySound inType, Map<String, String> inSounds)
 	{
 		this.m_sounds.put(inType, inSounds);
+	}
+
+	@Override
+	public String getNativeEntityName()
+	{
+		return CUSTOM_NAME;
 	}
 }

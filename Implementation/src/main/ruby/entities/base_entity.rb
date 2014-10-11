@@ -11,7 +11,8 @@ module RemoteEntities
 			include RemoteEntities::EntityMixins::InventoryCopier
 
 			attr_reader :entity
-			attr_reader :m_speed
+			attr_reader :speed
+			attr_reader :name_to_spawn_with
 			attr_accessor :unloaded_location
 
 			def initialize(in_id, in_type, in_manager)
@@ -19,7 +20,7 @@ module RemoteEntities
 				@entity = nil
 				self.pushable = true
 				self.stationary = false
-				self.speed = -1
+				@speed = -1
 			end
 
 			java_signature 'boolean move(org.bukkit.Location, float)'
@@ -125,11 +126,7 @@ module RemoteEntities
 				end
 			end
 
-			java_signature 'void teleport(org.bukkit.Location)'
-			def teleport(in_location)
-				self.bukkit_entity.teleport in_location
-			end
-
+			java_signature 'boolean despawn(de.kumpelblase2.remoteentities.api.DespawnReason)'
 			def despawn(in_reason)
 				event = Events::RemoteEntityDespawnEvent.new self, in_reason
 				bukkit.plugin_manager.call_event event
@@ -153,6 +150,22 @@ module RemoteEntities
 
 				@entity = nil
 				true
+			end
+
+			java_signature 'void spawn(org.bukkit.Location)'
+			def spawn(in_location)
+				return if self.is_spawned
+
+				event = RemoteEntities::Events::RemoteEntitySpawnEvent.new self, in_location
+				bukkit.plugin_manager.call_event event
+				return if event.is_cancelled
+
+				in_location = event.spawn_location
+				begin
+
+				rescue Exception => e
+					e.printf
+				end
 			end
 
 			def is_spawned
@@ -186,10 +199,6 @@ module RemoteEntities
 				self.entity.get_attibute_instance(NMS::GenericAttributes.d).get_value
 			end
 
-			def native_entity_name
-				'CUSTOM'
-			end
-
 			def set_name(in_name)
 				if self.is_spawned
 					if in_name.nil?
@@ -200,7 +209,7 @@ module RemoteEntities
 						self.bukkit_entity.custom_name = in_name
 					end
 				else
-					# todo
+					@name_to_spawn_with = in_name
 				end
 			end
 
@@ -208,7 +217,7 @@ module RemoteEntities
 				if self.is_spawned
 					self.bukkit_entity.custom_name
 				else
-					# todo
+					self.name_to_spawn_with
 				end
 			end
 
@@ -217,7 +226,16 @@ module RemoteEntities
 				if self.is_spawned
 					self.entity.get_attribute_instance(NMS::GenericAttributes.d).value
 				else
-					self.m_speed != -1 ? self.m_speed : NMS::GenericAttributes.d.b
+					@speed != -1 ? @speed : NMS::GenericAttributes.d.b
+				end
+			end
+
+			java_signature 'void setSpeed(double)'
+			def speed=(in_speed)
+				if @entity
+					@entity.get_attribute_instance(NMS::GenericAttributes.d).value = in_speed
+				else
+					@speed = in_speed
 				end
 			end
 		end
