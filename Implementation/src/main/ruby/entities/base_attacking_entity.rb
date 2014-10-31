@@ -18,7 +18,8 @@ module RemoteEntities
 				end
 			end
 
-			def get_target
+			java_signature 'org.bukkit.entity.LivingEntity getTarget()'
+			def target
 				if self.is_spawned
 					self.entity.goal_target
 				end

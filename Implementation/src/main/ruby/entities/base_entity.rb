@@ -238,6 +238,11 @@ module RemoteEntities
 					@speed = in_speed
 				end
 			end
+
+			java_signature 'org.bukkit.entity.LivingEntity getBukkitEntity()'
+			def bukkit_entity
+				@entity.bukkit_entity
+			end
 		end
 	end
 end

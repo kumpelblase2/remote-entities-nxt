@@ -50,7 +50,11 @@ module RemoteEntities
 					:p => 'p' # TODO
 				},
 				:living => {
-					:last_attack_tick => 'aK'
+					:last_attack_tick => 'aK',
+					:attack => {
+						:name => 'm',
+						:params => %w(nms.Entity)
+					}
 				},
 				:bat => {
 					:tick_movement => 'bq',
@@ -116,10 +120,50 @@ module RemoteEntities
 					:can_swim= => {
 						:name => 'e',
 						:params => %w(boolean)
+					},
+					:sun_restricted= => {
+						:name => 'd',
+						:params => %w(boolean)
+					},
+					:avoid_water? => 'a',
+					:avoid_water= => {
+						:name => 'a',
+						:params => %w(boolean)
+					},
+					:can_pass_doors= => {
+						:name => 'c',
+						:params => %w(boolean)
+					},
+					:can_pass_closed_doors? => 'c',
+					:can_pass_closed_doors= => {
+						:name => 'b',
+						:params => %w(boolean)
+					},
+					:pathfinding_range => 'd',
+					:current_path => 'e',
+					:path_to_location => {
+						:name => 'a',
+						:params => %w(double double double)
+					},
+					:try_move_to => {
+						:name => 'a',
+						:params => %w(double double double double)
+					},
+					:path_to_entity => {
+						:name => 'a',
+						:params => %w(nms.Entity)
+					},
+					:try_move_to_entity => {
+						:name => 'a',
+						:params => %w(nms.Entity double)
+					},
+					:path= => {
+						:name => 'a',
+						:params => %w(nms.PathEntity double)
 					}
 				},
 				:BlockDoor => {
-					:f => { #TODO
+					:open? => { #TODO
 						:name => 'f',
 						:params => %w(nms.IBlockAccess int int int)
 					}
@@ -133,6 +177,16 @@ module RemoteEntities
 						:params => %w(nms.Block),
 						:scope => 'class'
 					}
+				},
+				:ControllerMove => {
+					:update => 'c'
+				},
+				:ControllerLook => {
+					:update => 'a'
+				},
+				:ControllerJump => {
+					:update => 'b',
+					:jumping= => 'a'
 				}
 			},
 			:cb => {
