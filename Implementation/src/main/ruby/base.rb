@@ -48,6 +48,10 @@ end
 
 module NMS
 	include_package "net.minecraft.server.#{$MC_VERSION}"
+
+	module Auth
+		include_package 'net.minecraft.util.com.mojang.authlib'
+	end
 end
 
 module CB # Can you automatically map this? -> Theoretically yes, but not reliably.
@@ -71,6 +75,14 @@ module Bukkit
 
 	module Entity
 		include_package 'org.bukkit.entity'
+	end
+
+	module Metadata
+		include_package 'org.bukkit.metadata'
+	end
+
+	module Block
+		include_package 'org.bukkit.block'
 	end
 end
 
